@@ -1,0 +1,69 @@
+{
+  "name": "react-ts-npm-boilerplate",
+  "version": "1.1.9",
+  "description": "A template for a React + TypeScript + npm package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andy770921/react-ts-npm-boilerplate.git"
+  },
+  "license": "ISC",
+  "author": "Andy Chou",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "typescript",
+    "eslint",
+    "storybook",
+    "npm"
+  ],
+  "scripts": {
+    "start": "webpack-dev-server --open  --config webpack.config.dev.js",
+    "build": "webpack --config webpack.config.prod.js",
+    "watch": "tsc -w",
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build-storybook": "build-storybook -c .storybook -o demo"
+  },
+  "dependencies": {
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^8.4.5",
+    "@storybook/addon-links": "^8.4.5",
+    "@storybook/addons": "^7.6.17",
+    "@storybook/react": "^8.4.5",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
+    "ajv": "^8.17.1",
+    "babel-loader": "^9.2.1",
+    "eslint": "^9.15.0",
+    "eslint-config-airbnb": "19.0.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier-react": "0.0.24",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-html": "^8.1.2",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.9.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-promise": "^7.1.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "prettier": "^3.3.3",
+    "react-dom": "^18.3.1",
+    "ts-loader": "^9.5.1",
+    "tsconfig-paths-webpack-plugin": "^4.2.0",
+    "typescript": "^5.7.2",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0",
+    "webpack-merge": "^6.0.1"
+  }
+}
