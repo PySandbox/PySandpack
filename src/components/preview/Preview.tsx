@@ -6,18 +6,29 @@ import EngineProvider from './EngineProvider';
 export default function PySandpackPreview(props: { codes: Record<string, string> }) {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isRunning, setIsRunning] = React.useState(false);
-    const [output, setOutput] = React.useState<string>('');
+    const [outputs, setOutputs] = React.useState<Record<string, any>>({});
     const [error, setError] = React.useState<Error>();
 
     return (
         <div>
-            <>{output}</>
+            <>
+            {
+                Object.entries(outputs).map(([key, output]) => {
+                    return (
+                        <React.Fragment key={key}>
+                            {output}
+                            <br />
+                        </React.Fragment>
+                    )
+                })
+            }
+            </>
             {/* These providers should be the pare of context provider */}
             <EngineProvider onError={setError}>
                 {
                     (engine) => (
                         engine ?
-                            <ExecutionProvider engine={engine} codes={props.codes} onDone={setOutput} onError={setError}>
+                            <ExecutionProvider engine={engine} codes={props.codes} onDone={setOutputs} onError={setError}>
                                 {
                                     trigger => (
                                         <button
@@ -28,7 +39,7 @@ export default function PySandpackPreview(props: { codes: Record<string, string>
                                     )
                                 }
                             </ExecutionProvider> :
-                            <></>
+                            <>Loading...</>
                     )
                 }
             </EngineProvider >

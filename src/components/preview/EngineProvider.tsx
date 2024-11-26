@@ -3,8 +3,26 @@ import React from 'react';
 import type Pyodide from 'pyodide';
 
 import { Engine } from '../../types/engine';
+import { M2WProtocol } from '../../types/web-workder-protocol';
+import CodesRunner from './engine/CodesRunner';
 
 const PYODIDE_CDN_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+
+
+
+
+const worker = new Worker(new URL("./engine/EngineWorker.ts", import.meta.url))
+
+worker.postMessage({
+    command: 'pysandpack:init',
+    codes: { }
+} as M2WProtocol);
+
+worker.addEventListener('message', (ev: MessageEvent<M2WProtocol>) => {
+    console.log(ev.data);
+});
+
+
 
 export default function EngineProvider(props: { children: (pyodide: Engine | null) => React.ReactNode; onLoad?: (engine: Engine) => void; onError: (e: Error) => void; }) {
     const [engine, setEngine] = React.useState<Engine | null>(null);
@@ -31,34 +49,9 @@ export default function EngineProvider(props: { children: (pyodide: Engine | nul
                         const newEngine = await loadPyodide();
 
                         setEngine({
-                            initRuntime: async (codes) => {
-                                function extractImports(codes: Record<string, string>) {
-                                    const importRegex = /^(?:from\s+(\w+)\s+import\s+|import\s+(\w+))/gm;
-                                    const modules = new Set<string>();
-
-                                    for (const code of Object.values(codes)) {
-                                        let match;
-
-                                        while ((match = importRegex.exec(code)) !== null) {
-                                            modules.add(match[1] || match[2]);
-                                        }
-                                    }
-
-                                    return Array.from(modules);
-                                }
-
-                                const modules = extractImports(codes);
-
-                                for (const module of modules) {
-                                    try {
-                                        await newEngine.loadPackage(module);
-                                    }
-                                    catch (e: any) {
-                                        props.onError(e);
-                                    }
-                                }
-                            },
-                            runCodes: async (codes) => newEngine.runPythonAsync(Object.values(codes)[0] ?? ''),
+                            runCodes: async (codes) => {
+                                return new CodesRunner(newEngine).runPythonFiles(codes);
+                            }
                         });
                     }
                     catch (err) {

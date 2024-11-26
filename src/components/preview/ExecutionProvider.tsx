@@ -5,14 +5,14 @@ import { Engine } from "../../types/engine";
 type Props<T> = {
     codes: Record<string, string>;
     engine: Engine;
-    onDone: (output: T) => void;
+    onDone: (outputs: Record<string, T>) => void;
     onError: (error: Error) => void;
     children: (trigger: () => void) => React.ReactNode;
 }
 
 export default function ExecutionProvider<T>(props: Props<T>) {
     const [isRunning, setIsRunning] = React.useState(false);
-    const [output, setOutput] = React.useState<any>('');
+    const [output, setOutput] = React.useState<Record<string, any>>( {});
     const [error, setError] = React.useState<Error>();
 
     React.useEffect(() => {
@@ -28,16 +28,15 @@ export default function ExecutionProvider<T>(props: Props<T>) {
 
         setIsRunning(true);
         setError(undefined);
-        setOutput('');
+        setOutput({});
 
         try {
-            await engine.initRuntime(codes);
+            const results = await engine.runCodes(codes);
 
-            const result = await engine.runCodes(codes);
-
-            setOutput(result);
+            setOutput(results);
         }
         catch (err: any) {
+            console.error(err);
             setError(err);
         }
         finally {

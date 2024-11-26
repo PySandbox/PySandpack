@@ -40,11 +40,11 @@ export const PySandpackProvider = ({ children }: PySandpackProviderProps) => {
     };
 
     return (
-        <EngineProvider>
+        // <EngineProvider>
             <PySandpackContext.Provider value={contextValue}>
                 {children}
             </PySandpackContext.Provider>
-        </EngineProvider>
+        // </EngineProvider>
     );
 };
 
