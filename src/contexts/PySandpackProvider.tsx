@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 type PySandpackContextType = {
-    code: string;
-    setCode: (code: string) => void;
+    codes: Record<string, string>;
+    setCodes: (codes: Record<string, string>) => void;
     result: Result | undefined;
     setResult: (result: Result | undefined) => void;
     error: Error | undefined;
@@ -23,14 +23,14 @@ type Result = {
 }
 
 export const PySandpackProvider = ({ children }: PySandpackProviderProps) => {
-    const [code, setCode] = useState<string>("");
+    const [codes, setCodes] = useState<Record<string, string>>({});
     const [result, setResult] = useState<Result>();
     const [error, setError] = useState<Error>();
     const [isRunning, setIsRunning] = useState<boolean>(false);
 
     const contextValue: PySandpackContextType = {
-        code,
-        setCode,
+        codes,
+        setCodes,
         result,
         setResult,
         error,
