@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    library: 'MyComponent', // 컴포넌트 이름
+    library: 'PySandpack', // 컴포넌트 이름
     libraryTarget: 'umd',
     umdNamedDefine: true,
   },
