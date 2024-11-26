@@ -1,22 +1,18 @@
 {
     "compilerOptions": {
-      "target": "es5",
-      "module": "esnext",
-      "lib": ["ES2017", "ES7", "ES6", "DOM"],
-      "strict": true,
-      "noImplicitAny": false,
-      "removeComments": true,
-      "preserveConstEnums": true,
-      "baseUrl": "./",
-      "outDir": "./dist",
-      "typeRoots": ["node_modules/@types"],
-      "esModuleInterop": true,
-      "sourceMap": false,
+      "target": "ES5",
+      "lib": ["dom", "esnext"],
+      "module": "ESNext",
+      "moduleResolution": "node",
+      "jsx": "react",
       "declaration": true,
-      "noEmitOnError": true,
-      "jsx": "react-jsx"
+      "declarationDir": "./dist/types",
+      "outDir": "./dist",
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "strict": true
     },
-    "include": ["src/*.ts","src/*.tsx"],
-    "exclude": ["node_modules", "dist"]
-}
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+  }
   
