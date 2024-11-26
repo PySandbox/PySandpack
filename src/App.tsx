@@ -4,12 +4,12 @@ import PySandpack from './components/PySanpack';
 import PySandpackPreview from './components/preview/Preview';
 
 const App: React.FC = () => {
-  return (
-    <>
-      <PySandpack />
-      <PySandpackPreview />
-    </>
-  );
+    return (
+        <>
+            <PySandpack />
+            <PySandpackPreview />
+        </>
+    );
 };
 
 export default App;
