@@ -1,14 +1,12 @@
 import React from 'react';
 
 import PySandpack from './components/PySanpack';
-import PySandpackPreview from './components/preview/Preview';
 
 const App: React.FC = () => {
     return (
-        <>
+        <div style={{ height: '100vh', width: '100vw' }}>
             <PySandpack />
-            <PySandpackPreview />
-        </>
+        </div>
     );
 };
 
