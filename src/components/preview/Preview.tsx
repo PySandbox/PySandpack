@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { usePySandpack } from '@contexts/PySandpackProvider';
-import FloatingBox from '@components/base-ui/FloatingBox';
 import FlotingBoxLayout from '@components/base-ui/FlotingBoxLayout';
+import { CANVAS, PREVIEW_CONTAINER } from '@metadata/preview';
 
 function Controller() {
     const pspHook = usePySandpack();
@@ -19,8 +19,8 @@ export default function PySandpackPreview() {
 
     return (
         <FlotingBoxLayout floatingBox={<Controller />}>
-            <>
-                <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />aasd
+            <div>
+                <div id={PREVIEW_CONTAINER}></div>
                 {
                     Object.entries(pspHook.results ?? {}).map(([key, result]) => {
                         return (
@@ -31,7 +31,7 @@ export default function PySandpackPreview() {
                         )
                     })
                 }
-            </>
+            </div>
         </FlotingBoxLayout>
     );
 }

@@ -7,7 +7,7 @@ const App: React.FC = () => {
     const DEFAULT_CODES: Codes = { code: "print('Hello, World!')" };
 
     return (
-        <div style={{ height: '50vh', width: '90vw' }}>
+        <div style={{ height: '95vh', width: '99vw' }}>
             <PySandpack codes={DEFAULT_CODES} lang='python' />
         </div>
     );

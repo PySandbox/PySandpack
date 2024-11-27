@@ -16,9 +16,9 @@ export default function EngineProvider(props: { lang: Lang; children: (engine: E
     React.useEffect(() => {
         (async () => {
             try {
-                // const initedEngine = await uninitedEngine.init();
+                const initedEngine = await uninitedEngine.init();
 
-                // setEngine(initedEngine);
+                setEngine(initedEngine);
             }
             catch (err) {
                 setEngine(null);
