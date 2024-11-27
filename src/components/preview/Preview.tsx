@@ -2,8 +2,9 @@ import React from 'react';
 
 import ExecutionProvider from './ExecutionProvider';
 import EngineProvider from './EngineProvider';
+import { Lang } from 'types/language';
 
-export default function PySandpackPreview(props: { codes: Record<string, string> }) {
+export default function PySandpackPreview(props: { lang: Lang; codes: Record<string, string> }) {
     const [isLoading, setIsLoading] = React.useState(false);
     const [isRunning, setIsRunning] = React.useState(false);
     const [outputs, setOutputs] = React.useState<Record<string, any>>({});
@@ -12,19 +13,19 @@ export default function PySandpackPreview(props: { codes: Record<string, string>
     return (
         <div>
             <>
-            {
-                Object.entries(outputs).map(([key, output]) => {
-                    return (
-                        <React.Fragment key={key}>
-                            {output}
-                            <br />
-                        </React.Fragment>
-                    )
-                })
-            }
+                {
+                    Object.entries(outputs).map(([key, output]) => {
+                        return (
+                            <React.Fragment key={key}>
+                                {output}
+                                <br />
+                            </React.Fragment>
+                        )
+                    })
+                }
             </>
             {/* These providers should be the pare of context provider */}
-            <EngineProvider onError={setError}>
+            <EngineProvider lang={props.lang} onError={setError}>
                 {
                     (engine) => (
                         engine ?

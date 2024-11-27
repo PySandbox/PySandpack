@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Engine } from "../../types/engine";
+import { Engine } from "types/engine";
 
 type Props<T> = {
     codes: Record<string, string>;
@@ -12,7 +12,7 @@ type Props<T> = {
 
 export default function ExecutionProvider<T>(props: Props<T>) {
     const [isRunning, setIsRunning] = React.useState(false);
-    const [output, setOutput] = React.useState<Record<string, any>>( {});
+    const [output, setOutput] = React.useState<Record<string, any>>({});
     const [error, setError] = React.useState<Error>();
 
     React.useEffect(() => {

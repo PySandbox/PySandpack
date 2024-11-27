@@ -18,7 +18,7 @@ export default function PySandpack() {
                 className="split"
             >
                 <PySandpackEditor onChange={(v) => setCodes(v)} />
-                <PySandpackPreview codes={codes ?? {}} />
+                <PySandpackPreview lang="python" codes={codes ?? {}} />
             </Split>
         </div>
     );
