@@ -5,8 +5,8 @@ import { Engine } from "types/engine";
 type Props<T> = {
     codes: Record<string, string>;
     engine: Engine;
-    onDone: (outputs: Record<string, T>) => void;
-    onError: (error: Error) => void;
+    onDone?: (outputs: Record<string, T>) => void;
+    onError?: (error: Error) => void;
     children: (trigger: () => void) => React.ReactNode;
 }
 
@@ -16,14 +16,15 @@ export default function ExecutionProvider<T>(props: Props<T>) {
     const [error, setError] = React.useState<Error>();
 
     React.useEffect(() => {
-        error && props.onError(error);
+        error && props.onError?.(error);
     }, [error]);
 
     React.useEffect(() => {
-        props.onDone(output);
+        props.onDone?.(output);
     }, [output]);
 
-    const runCodes = async (engine: Engine, codes: Record<string, string>) => {
+    const runCodes = React.useCallback(async (engine: Engine, codes: Record<string, string>) => {
+        console.log(codes)
         if (isRunning) return;
 
         setIsRunning(true);
@@ -42,7 +43,7 @@ export default function ExecutionProvider<T>(props: Props<T>) {
         finally {
             setIsRunning(false);
         }
-    };
+    }, []);
 
     return (
         props.children(() => runCodes(props.engine, props.codes))
