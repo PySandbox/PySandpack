@@ -1,13 +1,13 @@
 import React from "react";
 
-import { Lang } from "types/language";
+import { Codes, Lang } from "types/code";
 import ExecutionProvider from "./ExecutionProvider";
 import EngineProvider from "./EngineProvider";
 
 type Results = Record<string, any>;
 
 type PySandpackCoreProperties = {
-    codes: Record<string, string>;
+    codes: Codes;
     runCodes: (() => void);
     results: Results | undefined;
     error: Error | undefined;
@@ -16,7 +16,7 @@ type PySandpackCoreProperties = {
 
 type PySandpackContextType = PySandpackCoreProperties & {
     isReady: boolean;
-    setCodes: (codes: Record<string, string>) => void;
+    setCodes: (codes: Codes) => void;
 }
 
 const PySandpackContext = React.createContext<PySandpackContextType>({
@@ -27,24 +27,28 @@ const PySandpackContext = React.createContext<PySandpackContextType>({
     error: undefined,
     isReady: false,
     isRunning: false,
-});
+});//FIXME: `undefined` initiation not work :(
 
 type PySandpackProviderProps = {
     lang: Lang;
-    codes: Record<string, string>;
+    codes: Codes;
     children: React.ReactNode;
 };
 
-function PySandpackProviderCore(props: { children: React.ReactNode; } & PySandpackCoreProperties) {
+function PySandpackProviderCore(props: { children: React.ReactNode; onCodesChange: (codes: Codes) => void } & PySandpackCoreProperties) {
     const [isReady, setIsReady] = React.useState(false);
-    const [codes, setCodes] = React.useState<Record<string, string>>(props.codes);
+    const [codes, setCodes] = React.useState<Codes>(props.codes);
 
     React.useEffect(() => {
         setIsReady(true);
     }, []);
 
+    React.useEffect(() => {
+        props.onCodesChange(codes);
+    }, [codes]);
+
     const contextValue = React.useMemo<PySandpackContextType>(() => ({
-        codes: props.codes,
+        codes,
         setCodes,
         runCodes: props.runCodes,
         results: props.results,
@@ -61,6 +65,7 @@ function PySandpackProviderCore(props: { children: React.ReactNode; } & PySandpa
 }
 
 export function PySandpackProvider(props: PySandpackProviderProps) {
+    const [codes, setCodes] = React.useState<Codes>(props.codes);
     const [results, setResults] = React.useState<Results>();
     const [error, setError] = React.useState<Error>();
     const [isRunning, setIsRunning] = React.useState<boolean>(false);
@@ -79,14 +84,15 @@ export function PySandpackProvider(props: PySandpackProviderProps) {
                     engine ?
                         <ExecutionProvider
                             engine={engine}
-                            codes={props.codes}
+                            codes={codes}
                             onDone={(results) => finalize(results, null)}
                             onError={(error) => finalize(null, error)}
                         >
                             {
                                 (trigger) => (
                                     <PySandpackProviderCore
-                                        codes={props.codes}
+                                        codes={codes}
+                                        onCodesChange={setCodes}
                                         error={error}
                                         results={results}
                                         isRunning={isRunning}

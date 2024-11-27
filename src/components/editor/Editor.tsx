@@ -2,12 +2,20 @@ import React from 'react';
 
 import CodeMirror from '@uiw/react-codemirror';
 
-export default function PySandpackEditor(props: { onChange: (codes: Record<string, string>) => void }) {
+import { usePySandpack } from '@contexts/PySandpackProvider';
+import { Codes } from 'types/code';
+
+export default function PySandpackEditor(props: { onChange?: (codes: Codes) => void }) {
+    const pySpHook = usePySandpack();
+
     return (
         <CodeMirror
             width='100%'
             height='100%'
-            onChange={(code) => { props.onChange({ code }) }}
+            onChange={(code) => {
+                pySpHook.setCodes({ code });
+                props.onChange?.({ code });
+            }}
             style={{ height: '100%', width: '100%', }}
         />
     )

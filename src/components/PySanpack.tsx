@@ -7,11 +7,9 @@ import PySandpackPreview from './preview/Preview';
 import { PySandpackProvider } from '@contexts/PySandpackProvider';
 
 export default function PySandpack() {
-    const [codes, setCodes] = React.useState<Record<string, string>>({});
-
     return (
         <div style={{ height: "100vh", width: "100%" }}>
-            <PySandpackProvider codes={codes} lang={'python'}>
+            <PySandpackProvider codes={{}} lang={'python'}>
                 <Split
                     sizes={[50, 50]}
                     minSize={100}
@@ -19,7 +17,7 @@ export default function PySandpack() {
                     direction="horizontal"
                     className="split"
                 >
-                    <PySandpackEditor onChange={(v) => setCodes(v)} />
+                    <PySandpackEditor />
                     <PySandpackPreview />
                 </Split>
             </PySandpackProvider>

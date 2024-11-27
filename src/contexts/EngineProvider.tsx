@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Engine } from 'types/engine';
 import EngineFactory from './engine/EngineFactory';
-import { Lang } from 'types/language';
+import { Lang } from 'types/code';
 
 export default function EngineProvider(props: { lang: Lang; children: (engine: Engine | null) => React.ReactNode; onReady?: (engine: Engine) => void; onError: (e: Error) => void; }) {
     const [engine, setEngine] = React.useState<Engine | null>(null);
