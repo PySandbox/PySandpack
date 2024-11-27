@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Engine } from 'types/engine';
-import EngineFactory from './engine/EngineFactory';
+import EngineFactory from './view-engine/EngineFactory';
 import { Lang } from 'types/code';
 
 export default function EngineProvider(props: { lang: Lang; children: (engine: Engine | null) => React.ReactNode; onReady?: (engine: Engine) => void; onError: (e: Error) => void; }) {
@@ -16,9 +16,9 @@ export default function EngineProvider(props: { lang: Lang; children: (engine: E
     React.useEffect(() => {
         (async () => {
             try {
-                const initedEngine = await uninitedEngine.init();
+                // const initedEngine = await uninitedEngine.init();
 
-                setEngine(initedEngine);
+                // setEngine(initedEngine);
             }
             catch (err) {
                 setEngine(null);

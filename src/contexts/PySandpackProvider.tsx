@@ -12,6 +12,7 @@ type PySandpackCoreProperties = {
     results: Results | undefined;
     error: Error | undefined;
     isRunning: boolean;
+    lang: Lang;
 }
 
 type PySandpackContextType = PySandpackCoreProperties & {
@@ -27,6 +28,7 @@ const PySandpackContext = React.createContext<PySandpackContextType>({
     error: undefined,
     isReady: false,
     isRunning: false,
+    lang: 'python',
 });//FIXME: `undefined` initiation not work :(
 
 type PySandpackProviderProps = {
@@ -55,6 +57,7 @@ function PySandpackProviderCore(props: { children: React.ReactNode; onCodesChang
         error: props.error,
         isRunning: props.isRunning,
         isReady,
+        lang: props.lang,
     }), [codes, setCodes, props.runCodes, props.results, props.error, props.isRunning]);
 
     return (
@@ -97,6 +100,7 @@ export function PySandpackProvider(props: PySandpackProviderProps) {
                                         results={results}
                                         isRunning={isRunning}
                                         runCodes={trigger}
+                                        lang={props.lang}
                                     >
                                         {props.children}
                                     </PySandpackProviderCore>

@@ -4,14 +4,16 @@ import CodeMirror from '@uiw/react-codemirror';
 
 import { usePySandpack } from '@contexts/PySandpackProvider';
 import { Codes } from 'types/code';
+import EditorExtensionFactory from '@contexts/editor-engine/EditorExtensionFactory';
 
-export default function PySandpackEditor(props: { onChange?: (codes: Codes) => void }) {
+export default function PySandpackEditor(props: { onChange?: (codes: Codes) => void; }) {
     const pySpHook = usePySandpack();
 
     return (
         <CodeMirror
-            width='100%'
-            height='100%'
+            value={Object.values(pySpHook.codes)[0]}
+            lang={pySpHook.lang}
+            extensions={new EditorExtensionFactory().create(pySpHook.lang)}
             onChange={(code) => {
                 pySpHook.setCodes({ code });
                 props.onChange?.({ code });

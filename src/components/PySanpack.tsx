@@ -1,26 +1,20 @@
 import React from 'react';
 
-import Split from "react-split";
-
 import PySandpackEditor from "./editor/Editor";
 import PySandpackPreview from './preview/Preview';
 import { PySandpackProvider } from '@contexts/PySandpackProvider';
+import { Codes, Lang } from 'types/code';
+import SplitLayout from './base-ui/SplitLayout';
 
-export default function PySandpack() {
+export default function PySandpack(props: { codes: Codes; lang: Lang; }) {
     return (
-        <div style={{ height: "100vh", width: "100%" }}>
-            <PySandpackProvider codes={{}} lang={'python'}>
-                <Split
-                    sizes={[50, 50]}
-                    minSize={100}
-                    gutterSize={10}
-                    direction="horizontal"
-                    className="split"
-                >
+        <div style={{ height: "100%", width: "100%" }}>
+            <PySandpackProvider codes={props.codes} lang={props.lang}>
+                <SplitLayout>
                     <PySandpackEditor />
                     <PySandpackPreview />
-                </Split>
+                </SplitLayout>
             </PySandpackProvider>
-        </div>
+        </div >
     );
 }

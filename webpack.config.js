@@ -15,6 +15,7 @@ module.exports = {
     alias: {
       "@components": path.resolve(__dirname, "src/components"),
       "@contexts": path.resolve(__dirname, "src/contexts"),
+      "@metadata": path.resolve(__dirname, "src/metadata"),
     }
   },
   module: {
