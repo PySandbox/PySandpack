@@ -1,5 +1,5 @@
 import { PREVIEW_CONTAINER } from "@metadata/preview";
-import Pyodide from "pyodide";
+import type Pyodide from "pyodide";
 import { type PyodideInterface } from "pyodide";
 
 import { Engine } from "types/engine";
