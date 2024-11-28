@@ -101,7 +101,7 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
             def write(self, text):
                 container.innerHTML += ("<div><font color='red'>" + text + "</font></div>")
 
-        sys.stderr = CustomError()
+        # sys.stderr = CustomError()
         sys.stdout = CustomOutput()
         `;
 
