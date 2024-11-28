@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/index-dev.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'index.js',
     library: 'PySandpack', // 컴포넌트 이름
     libraryTarget: 'umd',
     umdNamedDefine: true,

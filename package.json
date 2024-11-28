@@ -1,11 +1,12 @@
 {
   "name": "py_sandpack",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "PySandpack is a web-based platform designed to provide a sandbox environment for executing Python code directly in the browser. It is ideal for educational purposes, quick experiments, or running Python scripts without requiring a local Python installation.",
-  "main": "dist/bundle.js",
+  "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "webpack --mode production",
