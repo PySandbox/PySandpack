@@ -36,5 +36,5 @@ export default function StatusDisplay(props: { children?: React.ReactNode; block
 
     if (pspHook.isRunning && props.blockOnCodesRunning) return <CodesRunning />
 
-    return props.children ?? <></>
+    return props.children ? <>{props.children}</> : <></>;
 }

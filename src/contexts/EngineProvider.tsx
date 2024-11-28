@@ -28,5 +28,5 @@ export default function EngineProvider(props: { lang: Lang; children: (engine: E
         })();
     }, []);
 
-    return props.children(engine);
+    return <>{props.children(engine)}</>;
 }

@@ -22,7 +22,6 @@ export default function EmptyPreviewContent() {
                     Run your codes and check the output here!
                 </div>
             </div>
-
         </Overlay>
     )
 }

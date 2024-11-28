@@ -1,6 +1,6 @@
 import { PREVIEW_CONTAINER } from "@metadata/preview";
 import Pyodide from "pyodide";
-import { type PyodideInterface } from "pyodide";
+import type  { PyodideInterface } from "pyodide";
 
 import { Engine } from "types/engine";
 
@@ -108,8 +108,8 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         await this.runCode(REDIRECT_CODE);
     }
 
-    public init() {
-        if (this.pyodide) return Promise.resolve(this) as Promise<Engine>;
+    public init(): Promise<Engine> {
+        if (this.pyodide) return Promise.resolve(this);
 
         return new Promise<Engine>((resolve, reject) => {
             const script = document.createElement("script");

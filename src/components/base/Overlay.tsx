@@ -21,12 +21,13 @@ export default function Overlay(props: { children: React.ReactNode; visible?: bo
     };
 
     return (
-        isVisible && (
+        isVisible ? (
             <div style={overlayStyle} onClick={() => { props.cancelable && setIsVisible(false); }}>
                 <div style={contentStyle}>
                     {props.children}
                 </div>
             </div>
-        )
+        ) :
+        <></>
     );
 }

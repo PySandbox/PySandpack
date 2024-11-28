@@ -24,7 +24,7 @@ export default function ExecutionProvider<T>(props: Props<T>) {
         props.onDone?.(output);
     }, [output]);
 
-    const runCodes = React.useCallback(async (engine: Engine, codes: Codes, isRunnig: boolean) => {
+    const runCodes = React.useCallback(async (engine: Engine, codes: Codes, _isRunnig: boolean) => {
         if (isRunning) return;
 
         setIsRunning(true);
@@ -36,9 +36,9 @@ export default function ExecutionProvider<T>(props: Props<T>) {
 
             setOutput(results);
         }
-        catch (err: any) {
+        catch (err) {
             console.error(err);
-            setError(err);
+            setError(err as Error);
         }
         finally {
             setIsRunning(false);
@@ -46,6 +46,8 @@ export default function ExecutionProvider<T>(props: Props<T>) {
     }, []);
 
     return (
-        props.children(() => runCodes(props.engine, props.codes, isRunning), isRunning)
+        <>
+            {props.children(() => runCodes(props.engine, props.codes, isRunning), isRunning)}
+        </>
     )
 }
