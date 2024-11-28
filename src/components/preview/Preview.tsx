@@ -5,6 +5,7 @@ import FlotingBoxLayout from '@components/base/FloatingBoxLayout';
 import { PREVIEW_CONTAINER } from '@metadata/preview';
 import CodeRunner from '@components/common/CodeRunner';
 import StatusDisplay from '@components/common/StatusDisplay';
+import EmptyPreviewContent from './EmptyPreviewContent';
 
 export default function PySandpackPreview() {
     const pspHook = usePySandpack();
@@ -22,8 +23,8 @@ export default function PySandpackPreview() {
     return (
         <FlotingBoxLayout floatingBox={<CodeRunner tooltip='Re-run'>⟳</CodeRunner>}>
             <div>
-                <StatusDisplay />
-                <div id={PREVIEW_CONTAINER}></div>
+                <StatusDisplay blockOnCodesRunning />
+                <div id={PREVIEW_CONTAINER}><EmptyPreviewContent /></div>
                 {
                     Object.entries(pspHook.results ?? {}).map(([key, result]) => {
                         return (
