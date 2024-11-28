@@ -1,24 +1,21 @@
-// tsdx.config.js
-const path = require('path');
-const alias = require('@rollup/plugin-alias');
+const tsconfigPaths = require('tsconfig-paths');
+const { resolve } = require('path');
+const { compilerOptions } = require('./tsconfig.json');
+
+// Resolve paths
+const mappings = tsconfigPaths.loadConfig().paths;
+const resolvedPaths = Object.entries(mappings).map(([alias, paths]) => ({
+  find: alias.replace('/*', ''),
+  replacement: resolve(__dirname, compilerOptions.baseUrl, paths[0].replace('/*', '')),
+}));
 
 module.exports = {
-  rollup(config, options) {
-    const aliases = {
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@contexts': path.resolve(__dirname, 'src/contexts'),
-      '@metadata': path.resolve(__dirname, 'src/metadata')
-    };
-
+  rollup(config) {
     config.plugins.push(
-      alias({
-        entries: Object.entries(aliases).map(([find, replacement]) => ({
-          find,
-          replacement
-        }))
+      require('@rollup/plugin-alias')({
+        entries: resolvedPaths,
       })
     );
-
     return config;
-  }
+  },
 };
