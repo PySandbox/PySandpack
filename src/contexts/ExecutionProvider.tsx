@@ -8,7 +8,7 @@ type Props<T> = {
     engine: Engine;
     onDone?: (outputs: Results<T>) => void;
     onError?: (error: Error) => void;
-    children: (trigger: () => void) => React.ReactNode;
+    children: (trigger: () => void, isRunnig: boolean) => React.ReactNode;
 }
 
 export default function ExecutionProvider<T>(props: Props<T>) {
@@ -24,7 +24,7 @@ export default function ExecutionProvider<T>(props: Props<T>) {
         props.onDone?.(output);
     }, [output]);
 
-    const runCodes = React.useCallback(async (engine: Engine, codes: Codes) => {
+    const runCodes = React.useCallback(async (engine: Engine, codes: Codes, isRunnig: boolean) => {
         if (isRunning) return;
 
         setIsRunning(true);
@@ -46,6 +46,6 @@ export default function ExecutionProvider<T>(props: Props<T>) {
     }, []);
 
     return (
-        props.children(() => runCodes(props.engine, props.codes))
+        props.children(() => runCodes(props.engine, props.codes, isRunning), isRunning)
     )
 }

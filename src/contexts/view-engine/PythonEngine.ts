@@ -5,18 +5,6 @@ import { type PyodideInterface } from "pyodide";
 import { Engine } from "types/engine";
 
 const PYODIDE_CDN_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
-const REDIRECT_CODE = `
-import sys
-from js import document
-
-class CustomOutput:
-    def write(self, text):
-        container = document.getElementById("${PREVIEW_CONTAINER}")
-        container.innerHTML += text
-
-sys.stdout = CustomOutput()
-print("Pyodide output redirected!")
-`;
 
 // const worker = new Worker(new URL("./PythonEngineLoadingWebWorker.ts", import.meta.url))
 
@@ -91,11 +79,33 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         return result;
     }
 
-    private initMplTarget() {
+    private setupMplGraphElement() {
         const target = document.getElementById(PREVIEW_CONTAINER);
 
         //@ts-ignore
         document.pyodideMplTarget = target;
+    }
+
+    private async setupStdoutElement() {
+        const REDIRECT_CODE = `
+        import sys
+        from js import document
+        
+        container = document.getElementById("${PREVIEW_CONTAINER}")
+
+        class CustomOutput:
+            def write(self, text):
+                container.innerHTML += ("<div>" + text + "</div>")
+
+        class CustomError:
+            def write(self, text):
+                container.innerHTML += ("<div><font color='red'>" + text + "</font></div>")
+
+        sys.stderr = CustomError()
+        sys.stdout = CustomOutput()
+        `;
+
+        await this.runCode(REDIRECT_CODE);
     }
 
     public init() {
@@ -136,9 +146,8 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         const executionOrder = this.topologicalSort(graph);
         const results: Record<string, any> = {};
 
-        // await this.runCode(REDIRECT_CODE);
-
-        this.initMplTarget();
+        this.setupMplGraphElement();
+        await this.setupStdoutElement();
 
         for (const file of executionOrder) {
             const code = files[file];

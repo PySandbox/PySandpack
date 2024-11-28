@@ -10,7 +10,7 @@ export default function SplitLayout(props: SplitLayoutProps) {
     );
 
     return (
-        <div style={{ display: "flex", width: "100%", height: "100%" }}>
+        <div style={{ display: "flex", width: "100%", height: "100%", }}>
             {
                 props.children.map((child, index) => (
                     <React.Fragment key={index}>

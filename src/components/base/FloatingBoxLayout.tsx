@@ -2,7 +2,7 @@ import React from 'react';
 
 import FloatingBox from "./FloatingBox";
 
-export default function FlotingBoxLayout(props: { children: React.ReactNode; floatingBox: React.ReactNode; }) {
+export default function FloatingBoxLayout(props: { children: React.ReactNode; floatingBox: React.ReactNode; }) {
     const [scrollTop, setScrollTop] = React.useState(0);
 
     React.useEffect(() => {
@@ -18,7 +18,7 @@ export default function FlotingBoxLayout(props: { children: React.ReactNode; flo
     }, []);
 
     return (
-        <div style={{height: '100%', }}>
+        <div style={{ height: '100%', }}>
             <div style={{ position: 'relative', height: '100%', overflow: 'auto' }}>
                 <div>{props.children}</div>
             </div>

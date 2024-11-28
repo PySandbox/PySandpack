@@ -71,13 +71,10 @@ export function PySandpackProvider(props: PySandpackProviderProps) {
     const [codes, setCodes] = React.useState<Codes>(props.codes);
     const [results, setResults] = React.useState<Results>();
     const [error, setError] = React.useState<Error>();
-    const [isRunning, setIsRunning] = React.useState<boolean>(false);
 
     const finalize = React.useCallback((results: Results | null, error: Error | null) => {
         results && setResults(results);
         error && setError(error);
-
-        setIsRunning(false);
     }, []);
 
     return (
@@ -92,7 +89,7 @@ export function PySandpackProvider(props: PySandpackProviderProps) {
                             onError={(error) => finalize(null, error)}
                         >
                             {
-                                (trigger) => (
+                                (trigger, isRunning) => (
                                     <PySandpackProviderCore
                                         codes={codes}
                                         onCodesChange={setCodes}
