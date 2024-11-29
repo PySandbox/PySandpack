@@ -1,6 +1,6 @@
 import { PREVIEW_CONTAINER } from "@metadata/preview";
 
-import * as Pyodide from "pyodide";
+import type * as Pyodide from "pyodide";
 
 import { Engine } from "types/engine";
 
@@ -108,11 +108,11 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         await this.runCode(REDIRECT_CODE);
     }
 
-    private async initPyodideInCommon(): Promise<Pyodide.PyodideInterface> {
-        const pyodide = await Pyodide.loadPyodide();
+    // private async initPyodideInCommon(): Promise<Pyodide.PyodideInterface> {
+    //     const pyodide = await Pyodide.loadPyodide();
 
-        return pyodide;
-    }
+    //     return pyodide;
+    // }
 
     private initPyodideInBrowser() {
         return new Promise<Pyodide.PyodideInterface>(async (resolve, reject) => {
