@@ -6,6 +6,7 @@ import PythonEngine from './PythonEngine';
 
 const PYODIDE_CDN_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
 
+//@ts-ignore
 importScripts(PYODIDE_CDN_URL);
 
 type Pyodide = Pyodide.PyodideInterface;

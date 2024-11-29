@@ -1,20 +1,6 @@
 {
+  "files": [],
   "compilerOptions": {
-    "target": "ES5",
-    "lib": [
-      "dom",
-      "esnext",
-      "WebWorker"
-    ],
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "jsx": "react",
-    "declaration": true,
-    "declarationDir": "./dist/types",
-    "outDir": "./dist",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "strict": true,
     "baseUrl": "./src",
     "paths": {
       "@components/*": [
@@ -28,10 +14,12 @@
       ]
     }
   },
-  "include": [
-    "src/**/*"
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
   ],
-  "exclude": [
-    "node_modules"
-  ]
 }

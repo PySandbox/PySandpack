@@ -24,7 +24,7 @@ export default function ExecutionProvider<T>(props: Props<T>) {
         props.onDone?.(output);
     }, [output]);
 
-    const runCodes = React.useCallback(async (engine: Engine, codes: Codes, isRunnig: boolean) => {
+    const runCodes = React.useCallback(async (engine: Engine, codes: Codes, _isRunnig: boolean) => {
         if (isRunning) return;
 
         setIsRunning(true);

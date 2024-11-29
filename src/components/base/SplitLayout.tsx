@@ -5,7 +5,7 @@ interface SplitLayoutProps {
 }
 
 export default function SplitLayout(props: SplitLayoutProps) {
-    const [widths, setWidths] = React.useState<number[]>(
+    const [widths, _setWidths] = React.useState<number[]>(
         Array(props.children.length).fill(100 / props.children.length)
     );
 
@@ -20,7 +20,7 @@ export default function SplitLayout(props: SplitLayoutProps) {
                         {
                             index < props.children.length - 1 && (
                                 <div
-                                    onMouseDown={(e) => {
+                                    onMouseDown={(_e) => {
                                     }}
                                     style={{
                                         width: "4px",

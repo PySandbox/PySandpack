@@ -1,9 +1,9 @@
 import React from 'react';
 
-import FloatingBox from "./FloatingBox";
+// import FloatingBox from "./FloatingBox";
 
 export default function FloatingBoxLayout(props: { children: React.ReactNode; floatingBox: React.ReactNode; }) {
-    const [scrollTop, setScrollTop] = React.useState(0);
+    const [_scrollTop, setScrollTop] = React.useState(0);
 
     React.useEffect(() => {
         const handleScroll = () => {
