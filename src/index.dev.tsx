@@ -26,7 +26,7 @@ plt.show()
 
 const App = () => {
   return (
-    <div style={{height: "90vh"}}>
+    <div style={{height: "98vh",}} >
       <PySandpack codes={{ code: DEFAULT_CODE }} lang='python' />
     </div>
   );

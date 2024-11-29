@@ -49,6 +49,7 @@
     ],
     "dependencies": {
         "@codemirror/lang-python": "^6.1.6",
+        "@codemirror/view": "^6.35.0",
         "@uiw/react-codemirror": "^4.23.6"
     },
     "devDependencies": {
