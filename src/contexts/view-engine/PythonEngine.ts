@@ -4,10 +4,10 @@ import type * as Pyodide from "pyodide";
 
 import { Engine } from "types/engine";
 
-import "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+// import "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
 
-// const CDN = "https://cdn.jsdelivr.net/";
-// const PYODIDE_CDN_URL = CDN + "pyodide/v0.26.4/full/pyodide.js";
+const CDN = "https://cdn.jsdelivr.net/";
+const PYODIDE_CDN_URL = CDN + "pyodide/v0.26.4/full/pyodide.js";
 
 // const worker = new Worker(new URL("./PythonEngineLoadingWebWorker.ts", import.meta.url))
 
@@ -117,29 +117,46 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
     //     return pyodide;
     // }
 
+    private async getPyodideFromWindow() {
+        const loadPyodideInBrowser = (window as any).loadPyodide as typeof Pyodide.loadPyodide;
+
+        if (!loadPyodideInBrowser) throw new Error('`window` object does not contain `loadPyodide`.');
+
+        const pyodide = await loadPyodideInBrowser();
+
+        return pyodide;
+    }
+
     private initPyodideInBrowser() {
         return new Promise<Pyodide.PyodideInterface>(async (resolve, reject) => {
-            const script = document.createElement("script");
-            // script.crossOrigin = CDN;
-            // script.src = PYODIDE_CDN_URL;
-            // script.async = true;
-
-            // document.body.appendChild(script);
-
-            // script.onload(async () => { })
-
             try {
-                const loadPyodideInBrowser = (window as any).loadPyodide as typeof Pyodide.loadPyodide;
-
-                if (!loadPyodideInBrowser) throw new Error('`window` object does not contain `loadPyodide`.');
-
-                const pyodide = await loadPyodideInBrowser();
+                //NOTE: For preloaded
+                const pyodide = await this.getPyodideFromWindow();
 
                 resolve(pyodide);
+
+                return;
             }
-            catch (err) {
-                reject(err);
-            }
+            catch (e) { }
+
+            const script = document.createElement("script");
+
+            script.crossOrigin = CDN;
+            script.src = PYODIDE_CDN_URL;
+            script.async = true;
+
+            document.body.appendChild(script);
+
+            script.onload = async () => {
+                try {
+                    const pyodide = await this.getPyodideFromWindow();
+
+                    resolve(pyodide);
+                }
+                catch (e) {
+                    reject(e);
+                }
+            };
         });
     }
 
