@@ -16,7 +16,7 @@ export default function RoundedButton(props: RoundedButtonProps) {
                 border: 'none',
                 borderRadius: '50%',
                 aspectRatio: '1',
-                width: '1.3em',
+                width: '1cm',
                 cursor: props.disabled ? 'not-allowed' : 'pointer',
                 fontSize: '16px',
                 transition: 'background-color 0.3s ease',

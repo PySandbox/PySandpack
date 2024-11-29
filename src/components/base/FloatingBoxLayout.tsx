@@ -1,9 +1,9 @@
 import React from 'react';
 
-// import FloatingBox from "./FloatingBox";
+import FloatingBox from "./FloatingBox";
 
 export default function FloatingBoxLayout(props: { children: React.ReactNode; floatingBox: React.ReactNode; }) {
-    const [_scrollTop, setScrollTop] = React.useState(0);
+    const [scrollTop, setScrollTop] = React.useState(0);
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -18,11 +18,14 @@ export default function FloatingBoxLayout(props: { children: React.ReactNode; fl
     }, []);
 
     return (
-        <div style={{ height: '100%', }}>
-            <div style={{ position: 'relative', height: '100%', overflow: 'auto' }}>
+        <div style={{position: 'relative', height: '100%', }}>
+            <div style={{ height: '100%', overflow: 'auto' }}>
                 <div>{props.children}</div>
             </div>
-            <div
+            <FloatingBox>
+                {props.floatingBox}
+            </FloatingBox>
+            {/* <div
                 style={{
                     display: "flex",
                     justifyContent: "flex-end",
@@ -33,7 +36,7 @@ export default function FloatingBoxLayout(props: { children: React.ReactNode; fl
                 }}
             >
                 {props.floatingBox}
-            </div>
+            </div> */}
         </div>
     );
 

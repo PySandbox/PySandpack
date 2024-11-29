@@ -1,14 +1,15 @@
 import React from 'react';
 
-import CodeMirror from '@uiw/react-codemirror';
+import CodeMirror, { EditorView, ReactCodeMirrorProps } from '@uiw/react-codemirror';
 
 import { usePySandpack } from '@contexts/PySandpackProvider';
-import { Codes } from 'types/code';
 import EditorExtensionFactory from '@contexts/editor-engine/EditorExtensionFactory';
 import FloatingBoxLayout from '@components/base/FloatingBoxLayout';
 import CodeRunner from '@components/common/CodeRunner';
 
-export default function PySandpackEditor(props: { onChange?: (codes: Codes) => void; }) {
+export type PySandpackEditorProps = ReactCodeMirrorProps;
+
+export default function PySandpackEditor(props: PySandpackEditorProps) {
     const pySpHook = usePySandpack();
 
     return (
@@ -16,12 +17,19 @@ export default function PySandpackEditor(props: { onChange?: (codes: Codes) => v
             <CodeMirror
                 value={Object.values(pySpHook.codes)[0]}
                 lang={pySpHook.lang}
-                extensions={new EditorExtensionFactory().create(pySpHook.lang)}
+                width='100%'
+                maxWidth='100%'
+                extensions={[...new EditorExtensionFactory().create(pySpHook.lang), EditorView.lineWrapping]}
                 onChange={(code) => {
                     pySpHook.setCodes({ code });
-                    props.onChange?.({ code });
                 }}
-                style={{ height: '100%', width: '100%', }}
+                style={{
+                    height: '100%',
+                    width: '100%',
+                    maxWidth: '100%',
+                    overflowX: 'auto',
+                }}
+                {...props}
             />
         </FloatingBoxLayout>
     )

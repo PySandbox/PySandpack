@@ -1,4 +1,4 @@
-import { PREVIEW_CONTAINER } from "@metadata/preview";
+import { PREVIEW_CONTAINER, RUNTIME_ERROR_CONTAINER } from "@metadata/preview";
 
 import type * as Pyodide from "pyodide";
 
@@ -94,17 +94,19 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         import sys
         from js import document
         
-        container = document.getElementById("${PREVIEW_CONTAINER}")
+        previewContainer = document.getElementById("${PREVIEW_CONTAINER}")
+        runtimeErrorContainer = document.getElementById("${RUNTIME_ERROR_CONTAINER}")
 
         class CustomOutput:
             def write(self, text):
-                container.innerHTML += ("<div>" + text + "</div>")
+                previewContainer.innerHTML += ("<div>" + text + "</div>")
 
         class CustomError:
             def write(self, text):
-                container.innerHTML += ("<div><font color='red'>" + text + "</font></div>")
+                if runtimeErrorContainer:
+                    runtimeErrorContainer.innerHTML += ("<div><font color='red'>" + text + "</font></div>")
 
-        # sys.stderr = CustomError()
+        sys.stderr = CustomError()
         sys.stdout = CustomOutput()
         `;
 

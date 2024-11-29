@@ -2,8 +2,8 @@ import React from 'react';
 
 const floatingBoxStyle: React.CSSProperties = {
     position: 'absolute',
-    bottom: '20px',
-    right: '20px',
+    bottom: '10px',
+    right: '10px',
     padding: '10px',
     zIndex: 10,
 };
