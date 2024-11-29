@@ -6,7 +6,7 @@ export default function Rotation(props: { children: React.ReactNode; }) {
     React.useEffect(() => {
         const interval = setInterval(function () {
             setRotation(function (prevRotation) {
-                return (prevRotation + 10) % 360;
+                return (prevRotation + 10);
             });
         }, 100);
 

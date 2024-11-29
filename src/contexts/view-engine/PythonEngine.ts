@@ -1,6 +1,6 @@
 import { PREVIEW_CONTAINER } from "@metadata/preview";
-import type Pyodide from "pyodide";
-import { type PyodideInterface } from "pyodide";
+
+import * as Pyodide from "pyodide";
 
 import { Engine } from "types/engine";
 
@@ -18,7 +18,7 @@ const PYODIDE_CDN_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.j
 // });
 
 export default class PythonEngine implements Engine<Pyodide.PackageData> {
-    constructor(private pyodide: PyodideInterface | null = null) { }
+    constructor(private pyodide: Pyodide.PyodideInterface | null = null) { }
 
     private extractImports(script: string): string[] {
         const importRegex = /import\s+([a-zA-Z_][a-zA-Z0-9_]*)|from\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+import/g;
@@ -65,7 +65,7 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         return order;
     }
 
-    private resolvePyodide(): PyodideInterface {
+    private resolvePyodide(): Pyodide.PyodideInterface {
         if (!this.pyodide) throw new Error('Failed to resolve Pyodide. Call `init()` before use.');
 
         return this.pyodide;
@@ -108,10 +108,14 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         await this.runCode(REDIRECT_CODE);
     }
 
-    public init() {
-        if (this.pyodide) return Promise.resolve(this) as Promise<Engine>;
+    private async initPyodideInCommon(): Promise<Pyodide.PyodideInterface> {
+        const pyodide = await Pyodide.loadPyodide();
 
-        return new Promise<Engine>((resolve, reject) => {
+        return pyodide;
+    }
+
+    private initPyodideInBrowser() {
+        return new Promise<Pyodide.PyodideInterface>(async (resolve, reject) => {
             const script = document.createElement("script");
             script.src = PYODIDE_CDN_URL;
             script.async = true;
@@ -120,21 +124,33 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
 
             script.onload = async () => {
                 try {
-                    const loadPyodide = (window as any).loadPyodide as typeof Pyodide.loadPyodide;
+                    const loadPyodideInBrowser = (window as any).loadPyodide as typeof Pyodide.loadPyodide;
 
-                    if (!loadPyodide) throw new Error('`window` object does not contain `loadPyodide`.');
+                    if (!loadPyodideInBrowser) throw new Error('`window` object does not contain `loadPyodide`.');
 
-                    const pyodide = await loadPyodide();
+                    const pyodide = await loadPyodideInBrowser();
 
-                    this.pyodide = pyodide;
-
-                    resolve(this);
+                    resolve(pyodide);
                 }
                 catch (err) {
                     reject(err);
                 }
             };
         });
+    }
+
+    public async init() {
+        const promise = Promise.resolve(this) as Promise<Engine>;
+
+        if (this.pyodide) return promise;
+
+        // const isOnWebServer = window.location.protocol === 'http:' || window.location.protocol === 'https:';
+        console.log('Pyodide Loading')
+        const pyodide = await this.initPyodideInBrowser(); // await (isOnWebServer ? this.initPyodideInBrowser() : this.initPyodideInCommon());
+        console.log('Pyodide Loaded')
+        this.pyodide = pyodide;
+
+        return promise;
     }
 
     public async installDependencies(code: string) {
