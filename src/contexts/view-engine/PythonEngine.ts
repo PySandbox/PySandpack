@@ -4,7 +4,10 @@ import type * as Pyodide from "pyodide";
 
 import { Engine } from "types/engine";
 
-const PYODIDE_CDN_URL = "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+import "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+
+// const CDN = "https://cdn.jsdelivr.net/";
+// const PYODIDE_CDN_URL = CDN + "pyodide/v0.26.4/full/pyodide.js";
 
 // const worker = new Worker(new URL("./PythonEngineLoadingWebWorker.ts", import.meta.url))
 
@@ -117,25 +120,26 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
     private initPyodideInBrowser() {
         return new Promise<Pyodide.PyodideInterface>(async (resolve, reject) => {
             const script = document.createElement("script");
-            script.src = PYODIDE_CDN_URL;
-            script.async = true;
+            // script.crossOrigin = CDN;
+            // script.src = PYODIDE_CDN_URL;
+            // script.async = true;
 
-            document.body.appendChild(script);
+            // document.body.appendChild(script);
 
-            script.onload = async () => {
-                try {
-                    const loadPyodideInBrowser = (window as any).loadPyodide as typeof Pyodide.loadPyodide;
+            // script.onload(async () => { })
 
-                    if (!loadPyodideInBrowser) throw new Error('`window` object does not contain `loadPyodide`.');
+            try {
+                const loadPyodideInBrowser = (window as any).loadPyodide as typeof Pyodide.loadPyodide;
 
-                    const pyodide = await loadPyodideInBrowser();
+                if (!loadPyodideInBrowser) throw new Error('`window` object does not contain `loadPyodide`.');
 
-                    resolve(pyodide);
-                }
-                catch (err) {
-                    reject(err);
-                }
-            };
+                const pyodide = await loadPyodideInBrowser();
+
+                resolve(pyodide);
+            }
+            catch (err) {
+                reject(err);
+            }
         });
     }
 
