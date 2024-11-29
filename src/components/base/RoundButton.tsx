@@ -1,3 +1,4 @@
+import { PALLETE } from '@metadata/pallete';
 import React from 'react';
 
 interface RoundedButtonProps {
@@ -5,13 +6,15 @@ interface RoundedButtonProps {
     onClick?: () => void;
     children: React.ReactNode;
     disabled?: boolean;
+    color?: string;
 }
 
 export default function RoundedButton(props: RoundedButtonProps) {
     return (
         <button
             style={{
-                backgroundColor: props.disabled ? '#e7e7e777' : '#d7d7d7ee',
+                backgroundColor: props.color ?? PALLETE.NEUTRAL_GRAY,
+                opacity: props.disabled ? 0.1 : 0.3,
                 color: 'white',
                 border: 'none',
                 borderRadius: '50%',

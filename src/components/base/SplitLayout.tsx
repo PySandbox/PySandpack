@@ -1,3 +1,4 @@
+import { PALLETE } from '@metadata/pallete';
 import React from 'react';
 
 interface SplitLayoutProps {
@@ -59,7 +60,7 @@ export default function SplitLayout(props: SplitLayoutProps) {
                                     style={{
                                         width: "0.1cm",
                                         cursor: "col-resize",
-                                        backgroundColor: "#ccc",
+                                        backgroundColor: PALLETE.NEUTRAL_GRAY + '7e',
                                         zIndex: 1,
                                     }}
                                 />
