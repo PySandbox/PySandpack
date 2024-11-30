@@ -2,6 +2,8 @@ import React from 'react';
 
 import PySandpack from './components/PySanpack';
 import { Codes } from 'types/code';
+import { PySandpackProvider, usePySandpack } from '@contexts/PySandpackProvider';
+import PySandpackPreview from '@components/preview/Preview';
 
 const DEFAULT_CODE = `
 import pandas as pd
@@ -31,12 +33,33 @@ plt.show()
 
 `
 
+function PreviewComponent() {
+    const pySandpack = usePySandpack();
+
+    React.useEffect(() => {
+        pySandpack.runCodes();
+    }, []);
+
+    return (
+        <PySandpackPreview />
+    )
+}
+
+function YourComponent() {
+    return (
+        <PySandpackProvider codes={{ file: "print('Hello,World!')" }} lang="python">
+            <PreviewComponent />
+        </PySandpackProvider>
+    )
+}
+
 const App: React.FC = () => {
     const DEFAULT_CODES: Codes = { code: DEFAULT_CODE };
 
     return (
         <div style={{ position: 'relative', height: '99vh', width: '99vw' }}>
-            <PySandpack codes={DEFAULT_CODES} lang='python' />
+            <YourComponent />
+            {/* <PySandpack codes={DEFAULT_CODES} lang='python' /> */}
         </div>
     );
 };

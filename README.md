@@ -17,7 +17,35 @@
 
 ## Getting Started
 
-1. Clone the repository:  
-   ```bash
-   git clone https://github.com/PySandbox/PySandpack
-   cd PySandpack
+### 1. Using Code/Preview split component
+```ts
+import PySandpack from "py_sandpack";
+
+<PySandpack codes={{ "main.py": "print('Hello, World!')" }} lang="python" />;
+```
+
+### 2. Using Preview only
+```ts
+import { PySandpackProvider, usePySandpack } from 'py_sandpack';
+
+
+function PreviewComponent() {
+    const pySandpack = usePySandpack();
+
+    React.useEffect(() => {
+        pySandpack.runCodes();
+    }, []);
+
+    return (
+        <PySandpackPreview />
+    )
+}
+
+function YourComponent() {
+    return (
+        <PySandpackProvider codes={{ "main.py": "print('Hello,World!')" }} lang="python">
+            <PreviewComponent />
+        </PySandpackProvider>
+    )
+}
+```

@@ -75,7 +75,7 @@ export default function PySandpackPreview() {
     return (
         <FlotingBoxLayout floatingBox={<PreviewController />}>
             <div>
-                <StatusDisplay blockOnCodesRunning />
+                {pspHook.isReady ? <StatusDisplay blockOnCodesRunning /> : <></>}
                 <div id={PREVIEW_CONTAINER}><EmptyPreviewContent /></div>
                 {
                     Object.entries(pspHook.results ?? {}).map(([key, result]) => {
