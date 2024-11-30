@@ -1,6 +1,6 @@
 # PySandpack
 
-**PySandpack** is a web-based platform designed to provide a sandbox environment for executing Python code directly in the browser. It is ideal for educational purposes, quick experiments, or running Python scripts without requiring a local Python installation.
+**PySandpack** is a React library designed to provide a sandbox environment for executing Python code directly in the browser. It is ideal for educational purposes, quick experiments, or running Python scripts without requiring a local Python installation.
 
 ## Features
 
@@ -19,5 +19,5 @@
 
 1. Clone the repository:  
    ```bash
-   git clone https://github.com/your-username/PySandpack.git
+   git clone https://github.com/PySandbox/PySandpack
    cd PySandpack
