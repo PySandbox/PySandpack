@@ -1,4 +1,4 @@
-import { PALLETE } from '@metadata/pallete';
+import { PALETTE } from '@metadata/palette';
 import React from 'react';
 
 interface SplitLayoutProps {
@@ -23,7 +23,7 @@ export default function SplitLayout(props: SplitLayoutProps) {
 
         handleMouseMove.current = (e: MouseEvent) => {
             const dx = e.clientX - startX;
-            
+
             const containerWidth = ref.current?.offsetWidth;
 
             const deltaPercent = (dx / (containerWidth ?? 1000)) * 100;
@@ -60,7 +60,7 @@ export default function SplitLayout(props: SplitLayoutProps) {
                                     style={{
                                         width: "0.1cm",
                                         cursor: "col-resize",
-                                        backgroundColor: PALLETE.NEUTRAL_GRAY + '7e',
+                                        backgroundColor: PALETTE.NEUTRAL_GRAY + '7e',
                                         zIndex: 1,
                                     }}
                                 />

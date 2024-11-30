@@ -1,4 +1,4 @@
-import { PALLETE } from '@metadata/pallete';
+import { PALETTE } from '@metadata/palette';
 import React from 'react';
 
 interface RoundedButtonProps {
@@ -13,7 +13,7 @@ export default function RoundedButton(props: RoundedButtonProps) {
     return (
         <button
             style={{
-                backgroundColor: props.color ?? PALLETE.NEUTRAL_GRAY,
+                backgroundColor: props.color ?? PALETTE.NEUTRAL_GRAY,
                 opacity: props.disabled ? 0.1 : 0.3,
                 color: 'white',
                 border: 'none',

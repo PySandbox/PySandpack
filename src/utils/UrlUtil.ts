@@ -3,7 +3,6 @@ import LZString from 'lz-string';
 import { Codes } from "types/code";
 
 const KEY = 'pySandpackCodes' as const;
-const HOMEPAGE = 'https://pysandbox.github.io/dist/';
 
 function compCodes(codes: Codes) {
     try {

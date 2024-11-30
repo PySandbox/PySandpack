@@ -6,42 +6,33 @@ import { PREVIEW_CONTAINER, RUNTIME_ERROR_CONTAINER } from '@metadata/preview';
 import CodeRunner from '@components/common/CodeRunner';
 import StatusDisplay from '@components/common/StatusDisplay';
 import EmptyPreviewContent from './EmptyPreviewContent';
-import RoundedButton from '@components/base/RoundButton';
-import { PALLETE } from '@metadata/pallete';
+import { PALETTE } from '@metadata/palette';
+import PopupButton from '@components/base/PopupButton';
 
 function Errors() {
-    const popupRef = React.useRef<HTMLDivElement>(null);
     const [open, setOpen] = React.useState(false);
 
     return (
-        <>
-            <RoundedButton color={open ? 'red' : undefined} onClick={() => setOpen(!open)} tooltip='Errors'>⚠</RoundedButton>
+        <PopupButton
+            onChange={setOpen}
+            buttonProps={{
+                children: '⚠',
+                color: open ? 'red' : undefined,
+                tooltip: 'Errors',
+            }}
+        >
             <div
-                ref={popupRef}
                 style={{
-                    position: "absolute",
-                    right: open ? 'calc(1.5cm)' : `calc(${popupRef.current?.offsetWidth ?? 0}px + 1.5cm)`,
-                    bottom: open ? 'calc(1.5cm)' : `calc(${popupRef.current?.offsetHeight ?? 0}px + 1.5cm)`,
-                    display: open ? undefined : 'none',
-
+                    width: '18cm',
+                    height: '10cm',
+                    overflow: 'scroll',
+                    border: `1px solid ${PALETTE.NEUTRAL_GRAY}7e`,
+                    backgroundColor: PALETTE.NEUTRAL_GRAY + '7e',
                 }}
             >
-                <div style={{ cursor: 'pointer', color: PALLETE.NEUTRAL_GRAY, }} onClick={() => setOpen(false)}>
-                    ✖
-                </div>
-                <div
-                    style={{
-                        width: '18cm',
-                        height: '10cm',
-                        overflow: 'scroll',
-                        border: `1px solid ${PALLETE.NEUTRAL_GRAY}7e`,
-                        backgroundColor: PALLETE.NEUTRAL_GRAY + '40',
-                    }}
-                >
-                    <div id={RUNTIME_ERROR_CONTAINER}></div>
-                </div>
+                <div id={RUNTIME_ERROR_CONTAINER}></div>
             </div>
-        </>
+        </PopupButton>
     )
 }
 
