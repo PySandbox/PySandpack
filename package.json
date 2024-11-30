@@ -1,6 +1,6 @@
 {
   "name": "py_sandpack",
-  "version": "0.0.27",
+  "version": "0.0.29",
   "description": "PySandpack is a React library designed to provide a sandbox environment for executing Python code directly in the browser. It is ideal for educational purposes, quick experiments, or running Python scripts without requiring a local Python installation.",
   "keywords": [
     "python",
@@ -42,7 +42,8 @@
   "dependencies": {
     "@codemirror/basic-setup": "^0.20.0",
     "@codemirror/lang-python": "^6.1.6",
-    "@uiw/react-codemirror": "^4.23.6"
+    "@uiw/react-codemirror": "^4.23.6",
+    "lz-string": "^1.5.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",

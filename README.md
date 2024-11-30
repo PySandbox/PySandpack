@@ -13,11 +13,6 @@ Visit [PySandbox](https://pysandbox.github.io/dist/) to see what PySandpack can 
 - **Code Editor with Rich Features**  
   The integrated CodeMirror editor offers syntax highlighting, auto-indentation, and a clean interface for writing Python code.
 
-## Technology Stack
-
-- **[CodeMirror](https://codemirror.net/):** A versatile text editor for the web, providing an intuitive and developer-friendly experience.
-- **[Pyodide](https://pyodide.org/):** A Python distribution for the browser, enabling Python code execution using WebAssembly.
-
 ## Getting Started
 
 ### 1. Using Code/Preview split component
@@ -52,3 +47,11 @@ function YourComponent() {
     )
 }
 ```
+
+## Technology Stack
+
+- **[CodeMirror](https://codemirror.net/):** A versatile text editor for the web, providing an intuitive and developer-friendly experience.
+- **[Pyodide](https://pyodide.org/):** A Python distribution for the browser, enabling Python code execution using WebAssembly.
+
+## Logo Image Source
+- **[SVGREPO - Ouroboros SVG Vector](https://www.svgrepo.com/svg/18340/ouroboros)**
