@@ -12,6 +12,14 @@ export type PySandpackEditorProps = ReactCodeMirrorProps;
 export default function PySandpackEditor(props: PySandpackEditorProps) {
     const pySpHook = usePySandpack();
 
+    const handleShiftEnter = React.useCallback((e: React.KeyboardEvent) => {
+        if (e.shiftKey && e.key === 'Enter') {
+            e.preventDefault();
+
+            !pySpHook.isRunning && pySpHook.runCodes();
+        }
+    }, [pySpHook.isRunning, pySpHook.codes, pySpHook.runCodes]);
+
     return (
         <FloatingBoxLayout floatingBox={<CodeRunner tooltip='Run'>▶</CodeRunner>}>
             <CodeMirror
@@ -20,6 +28,10 @@ export default function PySandpackEditor(props: PySandpackEditorProps) {
                 width='100%'
                 maxWidth='100%'
                 extensions={[...new EditorExtensionFactory().create(pySpHook.lang), EditorView.lineWrapping]}
+                // onKeyDown={handleShiftEnter}
+                onKeyDownCapture={handleShiftEnter}
+                // onKeyUpCapture={handleShiftEnter}
+                // onKeyUp={handleShiftEnter}
                 onChange={(code) => {
                     pySpHook.setCodes({ code });
                 }}

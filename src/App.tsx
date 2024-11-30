@@ -4,8 +4,9 @@ import PySandpack from './components/PySanpack';
 import { Codes } from 'types/code';
 import { PySandpackProvider, usePySandpack } from '@contexts/PySandpackProvider';
 import PySandpackPreview from '@components/preview/Preview';
+import PySandpackUtil from '@utils/PySandpackUtil';
 
-const DEFAULT_CODE = `
+const DEFAULT_CODE = `# Example code
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -51,11 +52,11 @@ function YourComponent() {
 
 const App: React.FC = () => {
     return (
-    <>
-        <div style={{ position: 'relative', height: '98vh', width: '99vw' }}>
-            <PySandpack codes={DEFAULT_CODES} lang='python' />
-        </div>
-        {/* <div style={{ position: 'relative', height: '49vh', width: '99vw' }}>
+        <>
+            <div style={{ position: 'relative', height: '98vh', width: '99vw' }}>
+                <PySandpack codes={PySandpackUtil.UrlUtil.searchParam2Codes() ?? DEFAULT_CODES} lang='python' />
+            </div>
+            {/* <div style={{ position: 'relative', height: '49vh', width: '99vw' }}>
             <YourComponent />
         </div> */}
         </>

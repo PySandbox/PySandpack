@@ -77,6 +77,10 @@ export default defineConfig({
         find: "@metadata",
         replacement: path.resolve(__dirname, "src/metadata"),
       },
+      {
+        find: "@utils",
+        replacement: path.resolve(__dirname, "src/utils"),
+      },
     ],
   },
   // optimizeDeps: {

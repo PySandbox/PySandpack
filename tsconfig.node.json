@@ -31,6 +31,9 @@
       ],
       "@metadata/*": [
         "metadata/*"
+      ],
+      "@utils/*": [
+        "utils/*"
       ]
     }
   },
