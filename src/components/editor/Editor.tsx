@@ -11,7 +11,9 @@ import PopupButton from '@components/base/PopupButton';
 import PySandpackUtil from '@utils/PySandpackUtil';
 import Button from '@components/base/Button';
 
-export type PySandpackEditorProps = ReactCodeMirrorProps;
+type CommonProps = { hidePySandbox?: boolean; };
+
+export type PySandpackEditorProps = ReactCodeMirrorProps & CommonProps;
 
 function Share() {
     const HOMEPAGE = 'https://pysandbox.github.io/dist/?';
@@ -66,10 +68,10 @@ function Share() {
     )
 }
 
-function EditorController() {
+function EditorController(props: CommonProps) {
     return (
         <div style={{ display: 'flex', gap: 10 }}>
-            <Share />
+            {props.hidePySandbox ? <></> : <Share />}
             <CodeRunner tooltip='Run'>▶</CodeRunner>
         </div>
     )
@@ -87,20 +89,12 @@ export default function PySandpackEditor(props: PySandpackEditorProps) {
     }, [pySpHook.isRunning, pySpHook.codes, pySpHook.runCodes]);
 
     return (
-        <FloatingBoxLayout floatingBox={<EditorController />}>
+        <FloatingBoxLayout floatingBox={<EditorController {...props} />}>
             <CodeMirror
                 value={Object.values(pySpHook.codes)[0]}
                 lang={pySpHook.lang}
                 width='100%'
                 maxWidth='100%'
-                extensions={[...new EditorExtensionFactory().create(pySpHook.lang), EditorView.lineWrapping]}
-                // onKeyDown={handleShiftEnter}
-                onKeyDownCapture={handleShiftEnter}
-                // onKeyUpCapture={handleShiftEnter}
-                // onKeyUp={handleShiftEnter}
-                onChange={(code) => {
-                    pySpHook.setCodes({ code });
-                }}
                 style={{
                     height: '100%',
                     width: '100%',
@@ -108,6 +102,19 @@ export default function PySandpackEditor(props: PySandpackEditorProps) {
                     overflowX: 'auto',
                 }}
                 {...props}
+                extensions={[...(props.extensions ?? []), ...new EditorExtensionFactory().create(pySpHook.lang), EditorView.lineWrapping]}
+                // onKeyDown={handleShiftEnter}
+                onKeyDownCapture={(e) => {
+                    props.onKeyDownCapture?.(e);
+
+                    handleShiftEnter(e);
+                }}
+                // onKeyUpCapture={handleShiftEnter}
+                // onKeyUp={handleShiftEnter}
+                onChange={(code, viewUpdate) => {
+                    props.onChange?.(code, viewUpdate);
+                    pySpHook.setCodes({ code });
+                }}
             />
         </FloatingBoxLayout>
     )
