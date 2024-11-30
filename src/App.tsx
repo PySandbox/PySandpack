@@ -33,6 +33,8 @@ plt.show()
 
 `
 
+const DEFAULT_CODES: Codes = { code: DEFAULT_CODE };
+
 function PreviewComponent() {
     const pySandpack = usePySandpack();
 
@@ -47,20 +49,22 @@ function PreviewComponent() {
 
 function YourComponent() {
     return (
-        <PySandpackProvider codes={{ file: "print('Hello,World!')" }} lang="python">
+        <PySandpackProvider codes={DEFAULT_CODES} lang="python">
             <PreviewComponent />
         </PySandpackProvider>
     )
 }
 
 const App: React.FC = () => {
-    const DEFAULT_CODES: Codes = { code: DEFAULT_CODE };
-
     return (
-        <div style={{ position: 'relative', height: '99vh', width: '99vw' }}>
-            <YourComponent />
-            {/* <PySandpack codes={DEFAULT_CODES} lang='python' /> */}
+    <>
+        <div style={{ position: 'relative', height: '98vh', width: '99vw' }}>
+            <PySandpack codes={DEFAULT_CODES} lang='python' />
         </div>
+        {/* <div style={{ position: 'relative', height: '49vh', width: '99vw' }}>
+            <YourComponent />
+        </div> */}
+        </>
     );
 };
 
