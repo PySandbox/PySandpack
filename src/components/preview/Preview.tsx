@@ -56,6 +56,14 @@ export default function PySandpackPreview() {
         previewContainer.innerHTML = '';
     }, [])
 
+    const parseResult = React.useCallback((result: any) => {
+        if (typeof result?.toString === 'function') {
+            return result.toString();
+        }
+
+        return result;
+    }, [])
+
     React.useEffect(() => {
         if (!pspHook.isRunning) return;
 
@@ -72,7 +80,9 @@ export default function PySandpackPreview() {
                     Object.entries(pspHook.results ?? {}).map(([key, result]) => {
                         return (
                             <React.Fragment key={key}>
-                                {result}
+                                <pre>
+                                    {parseResult(result)}
+                                </pre>
                                 <br />
                             </React.Fragment>
                         )
