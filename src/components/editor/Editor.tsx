@@ -44,6 +44,7 @@ function Share() {
                     gap: 10,
                     display: 'flex',
                     flexDirection: 'column',
+                    backgroundColor: 'white',
                 }}
             >
                 <>
