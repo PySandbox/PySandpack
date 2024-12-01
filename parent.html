@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostMessage Example</title>
+</head>
+<body>
+    <script>
+        let i = 0;
+
+        function post() {
+            console.log(i);
+            
+            const target = document.getElementById('pySandpack');
+
+            target.contentWindow.postMessage(
+                { type: 'pySandpackCodes', payload: { codes: { 'main.py': `print('Hello, World ${i++}')` }  } },
+                'http://localhost:5173'
+            );
+        }
+    </script>
+
+    <button onclick="post()">Send</button>
+    <iframe style="height: 500px" id="pySandpack" src="http://localhost:5173/" style="width: 600px; height: 400px;"></iframe>
+</body>
+</html>

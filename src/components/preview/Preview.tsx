@@ -47,32 +47,46 @@ function PreviewController() {
 
 export default function PySandpackPreview() {
     const pspHook = usePySandpack();
+    
+    const [is1st, setIs1st] = React.useState(true); 
 
-    const cleanEelmentById = React.useCallback((id: string) => {
-        const previewContainer = document.getElementById(id);
+    // const cleanEelmentById = React.useCallback((id: string) => {
+    //     const previewContainer = document.getElementById(id);
 
-        if (!previewContainer) return;
+    //     if (!previewContainer) return;
 
-        previewContainer.innerHTML = '';
+    //     previewContainer.innerHTML = '';
+    // }, [])
+
+    const parseResult = React.useCallback((result: any) => {
+        if (typeof result?.toString === 'function') {
+            return result.toString();
+        }
+
+        return result;
     }, [])
 
     React.useEffect(() => {
-        if (!pspHook.isRunning) return;
+        if (pspHook.isRunning) setIs1st(false);
 
-        cleanEelmentById(PREVIEW_CONTAINER);
-        cleanEelmentById(RUNTIME_ERROR_CONTAINER);
+        // if (!pspHook.isRunning) return;
+
+        // cleanEelmentById(PREVIEW_CONTAINER);
+        // cleanEelmentById(RUNTIME_ERROR_CONTAINER);
     }, [pspHook.isRunning]);
 
     return (
         <FlotingBoxLayout floatingBox={<PreviewController />}>
             <div>
                 {pspHook.isReady ? <StatusDisplay blockOnCodesRunning /> : <></>}
-                <div id={PREVIEW_CONTAINER}><EmptyPreviewContent /></div>
+                <div id={PREVIEW_CONTAINER}>{pspHook.isRunning || !is1st ? <></> : <EmptyPreviewContent />}</div>
                 {
                     Object.entries(pspHook.results ?? {}).map(([key, result]) => {
                         return (
                             <React.Fragment key={key}>
-                                {result}
+                                <pre>
+                                    {parseResult(result)}
+                                </pre>
                                 <br />
                             </React.Fragment>
                         )

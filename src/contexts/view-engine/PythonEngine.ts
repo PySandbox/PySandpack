@@ -92,14 +92,18 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
     private async setupStdoutElement() {
         const REDIRECT_CODE = `
         import sys
+        from js import console
         from js import document
-        
+
         previewContainer = document.getElementById("${PREVIEW_CONTAINER}")
         runtimeErrorContainer = document.getElementById("${RUNTIME_ERROR_CONTAINER}")
 
+        previewContainer.innerHTML = ''
+        runtimeErrorContainer.innerHTML = ''
+
         class CustomOutput:
             def write(self, text):
-                previewContainer.innerHTML += ("<div>" + text + "</div>")
+                previewContainer.innerHTML += ("<pre>" + text + "</pre>")
 
         class CustomError:
             def write(self, text):
@@ -110,7 +114,10 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         sys.stdout = CustomOutput()
         `;
 
+        const FONT_CODE = ``;
+
         await this.runCode(REDIRECT_CODE);
+        await this.runCode(FONT_CODE);
     }
 
     // private async initPyodideInCommon(): Promise<Pyodide.PyodideInterface> {
