@@ -1,8 +1,9 @@
-import { PREVIEW_CONTAINER, RUNTIME_ERROR_CONTAINER } from "@metadata/preview";
+import { PREVIEW_CONTAINER, } from "@metadata/preview";
 
 import type * as Pyodide from "pyodide";
 
 import { Engine } from "types/engine";
+import { FONT_INIT_CODE, VIEW_INIT_CODE } from "./PredefinedCodes";
 
 // import "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
 
@@ -90,34 +91,8 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
     }
 
     private async setupStdoutElement() {
-        const REDIRECT_CODE = `
-        import sys
-        from js import console
-        from js import document
-
-        previewContainer = document.getElementById("${PREVIEW_CONTAINER}")
-        runtimeErrorContainer = document.getElementById("${RUNTIME_ERROR_CONTAINER}")
-
-        previewContainer.innerHTML = ''
-        runtimeErrorContainer.innerHTML = ''
-
-        class CustomOutput:
-            def write(self, text):
-                previewContainer.innerHTML += ("<pre>" + text + "</pre>")
-
-        class CustomError:
-            def write(self, text):
-                if runtimeErrorContainer:
-                    runtimeErrorContainer.innerHTML += ("<div><font color='red'>" + text + "</font></div>")
-
-        sys.stderr = CustomError()
-        sys.stdout = CustomOutput()
-        `;
-
-        const FONT_CODE = ``;
-
-        await this.runCode(REDIRECT_CODE);
-        await this.runCode(FONT_CODE);
+        await this.runCode(VIEW_INIT_CODE);
+        await this.runCode(FONT_INIT_CODE);
     }
 
     // private async initPyodideInCommon(): Promise<Pyodide.PyodideInterface> {
