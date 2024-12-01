@@ -1,8 +1,7 @@
+import { CODES_KEY } from '@metadata/message-protocol-enum';
 import LZString from 'lz-string';
 
 import { Codes } from "types/code";
-
-const KEY = 'pySandpackCodes' as const;
 
 function compCodes(codes: Codes) {
     try {
@@ -38,7 +37,7 @@ export function searchParam2Codes() {
 
     params.forEach((value, key) => paramMap.set(key, value));
 
-    const codesString = paramMap.get(KEY);
+    const codesString = paramMap.get(CODES_KEY);
     const codes = codesString ? decompCodes(codesString) : undefined;
 
     return codes;
@@ -48,7 +47,7 @@ export function codes2SearchParam(codes: Codes) {
     const query = compCodes(codes);
     const params = new URLSearchParams(window.location.search);
 
-    params.set(KEY, query ?? '');
+    params.set(CODES_KEY, query ?? '');
 
     const str = params.toString();
 

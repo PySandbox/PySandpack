@@ -3,6 +3,7 @@ import React from "react";
 import { Codes, Lang } from "types/code";
 import ExecutionProvider from "./ExecutionProvider";
 import EngineProvider from "./EngineProvider";
+import { Ext2PySpMessageProtocol } from "types/message-protocol";
 
 type Results = Record<string, any>;
 
@@ -43,6 +44,23 @@ function PySandpackProviderCore(props: { children: React.ReactNode; onCodesChang
 
     React.useEffect(() => {
         setIsReady(true);
+    }, []);
+
+    React.useEffect(() => {
+        const handleMessage = (event: MessageEvent<Ext2PySpMessageProtocol>) => {
+            switch (event.data.type) {
+                case 'pySandpackCodes':
+                    setCodes(event.data.payload.codes);
+                    break;
+                default:
+            }
+        };
+
+        window.addEventListener("message", handleMessage);
+
+        return () => {
+            window.removeEventListener("message", handleMessage);
+        };
     }, []);
 
     React.useEffect(() => {

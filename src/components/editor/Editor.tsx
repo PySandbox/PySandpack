@@ -71,7 +71,7 @@ function EditorController() {
     return (
         <div style={{ display: 'flex', gap: 10 }}>
             <Share />
-            <CodeRunner tooltip='Run'>▶</CodeRunner>
+            <CodeRunner tooltip='Run (Shift + Enter)'>▶</CodeRunner>
         </div>
     )
 }
@@ -86,6 +86,10 @@ export default function PySandpackEditor(props: PySandpackEditorProps) {
             !pySpHook.isRunning && pySpHook.runCodes();
         }
     }, [pySpHook.isRunning, pySpHook.codes, pySpHook.runCodes]);
+
+    React.useEffect(() => {
+        console.log(pySpHook.codes)
+    }, [pySpHook.codes]);
 
     return (
         <FloatingBoxLayout floatingBox={<EditorController />}>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostMessage Example</title>
+</head>
+<body>
+    <script>
+        function post() {
+            const target = document.getElementById('pySandpack');
+
+            // 메시지 전송
+            target.contentWindow.postMessage(
+                { type: 'pySandpackCodes', payload: { codes: { 'main.py': `print('Hello, World')` }  } },
+                'http://localhost:5173' // 정확한 targetOrigin
+            );
+        }
+    </script>
+
+    <button onclick="post()">Send</button>
+    <iframe id="pySandpack" src="http://localhost:5173/" style="width: 600px; height: 400px;"></iframe>
+</body>
+</html>
