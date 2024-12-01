@@ -4,15 +4,15 @@ import { Codes, Results } from 'types/code';
 import { Engine } from "types/engine";
 
 type Props<T> = {
-    codes: Record<string, string>;
-    engine: Engine;
+    // codes: Record<string, string>;
+    // engine: Engine;
+    onStart?: () => void;
     onDone?: (outputs: Results<T>) => void;
     onError?: (error: Error) => void;
-    children: (trigger: () => void, isRunnig: boolean) => React.ReactNode;
+    children: (trigger: (engine: Engine, codes: Codes, isRunning: boolean) => void) => React.ReactNode;
 }
 
 export default function ExecutionProvider<T>(props: Props<T>) {
-    const [isRunning, setIsRunning] = React.useState(false);
     const [output, setOutput] = React.useState<Results<T>>({});
     const [error, setError] = React.useState<Error>();
 
@@ -24,10 +24,10 @@ export default function ExecutionProvider<T>(props: Props<T>) {
         props.onDone?.(output);
     }, [output]);
 
-    const runCodes = React.useCallback(async (engine: Engine, codes: Codes, _isRunnig: boolean) => {
+    const runCodes = React.useCallback(async (engine: Engine, codes: Codes, isRunning: boolean) => {
         if (isRunning) return;
 
-        setIsRunning(true);
+        props.onStart?.();
         setError(undefined);
         setOutput({});
 
@@ -40,12 +40,9 @@ export default function ExecutionProvider<T>(props: Props<T>) {
             console.error(err);
             setError(err);
         }
-        finally {
-            setIsRunning(false);
-        }
     }, []);
 
     return (
-        props.children(() => runCodes(props.engine, props.codes, isRunning), isRunning)
+        props.children((engine, codes, isRunning) => runCodes(engine, codes, isRunning))
     )
 }

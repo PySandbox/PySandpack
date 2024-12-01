@@ -34,8 +34,8 @@ function PreviewComponent() {
     const pySandpack = usePySandpack();
 
     React.useEffect(() => {
-        pySandpack.runCodes();
-    }, []);
+        pySandpack.isReady && pySandpack.runCodes();
+    }, [pySandpack.isReady, pySandpack.codes]);
 
     return (
         <PySandpackPreview />
@@ -56,9 +56,9 @@ const App: React.FC = () => {
             <div style={{ position: 'relative', height: '98vh', width: '99vw' }}>
                 <PySandpack codes={PySandpackUtil.UrlUtil.searchParam2Codes() ?? DEFAULT_CODES} lang='python' />
             </div>
-            {/* <div style={{ position: 'relative', height: '49vh', width: '99vw' }}>
-            <YourComponent />
-        </div> */}
+            {/* <div style={{ position: 'relative', height: '98vh', width: '99vw' }}>
+                <YourComponent />
+            </div> */}
         </>
     );
 };

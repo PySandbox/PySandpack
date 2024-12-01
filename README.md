@@ -26,13 +26,12 @@ import PySandpack from "py_sandpack";
 ```ts
 import { PySandpackProvider, usePySandpack } from 'py_sandpack';
 
-
 function PreviewComponent() {
     const pySandpack = usePySandpack();
 
     React.useEffect(() => {
-        pySandpack.runCodes();
-    }, []);
+        pySandpack.isReady && pySandpack.runCodes();
+    }, [pySandpack.isReady, pySandpack.codes]);
 
     return (
         <PySandpackPreview />

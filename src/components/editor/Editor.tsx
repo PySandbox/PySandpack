@@ -87,10 +87,6 @@ export default function PySandpackEditor(props: PySandpackEditorProps) {
         }
     }, [pySpHook.isRunning, pySpHook.codes, pySpHook.runCodes]);
 
-    React.useEffect(() => {
-        console.log(pySpHook.codes)
-    }, [pySpHook.codes]);
-
     return (
         <FloatingBoxLayout floatingBox={<EditorController />}>
             <CodeMirror

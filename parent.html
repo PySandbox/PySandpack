@@ -10,17 +10,18 @@
         let i = 0;
 
         function post() {
+            console.log(i);
+            
             const target = document.getElementById('pySandpack');
 
-            // 메시지 전송
             target.contentWindow.postMessage(
                 { type: 'pySandpackCodes', payload: { codes: { 'main.py': `print('Hello, World ${i++}')` }  } },
-                'http://localhost:5173' // 정확한 targetOrigin
+                'http://localhost:5173'
             );
         }
     </script>
 
     <button onclick="post()">Send</button>
-    <iframe id="pySandpack" src="http://localhost:5173/" style="width: 600px; height: 400px;"></iframe>
+    <iframe style="height: 500px" id="pySandpack" src="http://localhost:5173/" style="width: 600px; height: 400px;"></iframe>
 </body>
 </html>
