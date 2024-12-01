@@ -7,12 +7,14 @@
 </head>
 <body>
     <script>
+        let i = 0;
+
         function post() {
             const target = document.getElementById('pySandpack');
 
             // 메시지 전송
             target.contentWindow.postMessage(
-                { type: 'pySandpackCodes', payload: { codes: { 'main.py': `print('Hello, World')` }  } },
+                { type: 'pySandpackCodes', payload: { codes: { 'main.py': `print('Hello, World ${i++}')` }  } },
                 'http://localhost:5173' // 정확한 targetOrigin
             );
         }
