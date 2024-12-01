@@ -92,6 +92,7 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
     private async setupStdoutElement() {
         const REDIRECT_CODE = `
         import sys
+        from js import console
         from js import document
         
         previewContainer = document.getElementById("${PREVIEW_CONTAINER}")
@@ -99,7 +100,7 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
 
         class CustomOutput:
             def write(self, text):
-                previewContainer.innerHTML += ("<div>" + text + "</div>")
+                previewContainer.innerHTML += ("<pre>" + text + "</pre>")
 
         class CustomError:
             def write(self, text):
