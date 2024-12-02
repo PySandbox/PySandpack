@@ -36,6 +36,7 @@ type PySandpackProviderProps = {
     lang: Lang;
     codes: Codes;
     children: React.ReactNode;
+    onRunCodes?: () => void;
 };
 
 function PySandpackProviderCore(props: { children: React.ReactNode; onCodesChange: (codes: Codes) => void; trigger: (codes: Codes, isRunning: boolean) => void; } & PySandpackCoreProperties) {
@@ -116,7 +117,7 @@ export function PySandpackProvider(props: PySandpackProviderProps) {
                                         error={error}
                                         results={results}
                                         isRunning={isRunning}
-                                        trigger={(codes, isRunning) => trigger(engine, codes, isRunning)}
+                                        trigger={(codes, isRunning) => { trigger(engine, codes, isRunning); props.onRunCodes?.() }}
                                         lang={props.lang}
                                     >
                                         {props.children}
@@ -130,7 +131,7 @@ export function PySandpackProvider(props: PySandpackProviderProps) {
                             error={undefined}
                             results={undefined}
                             isRunning={false}
-                            trigger={() => console.error('Failed to run code. Engine has not been inited.')}
+                            trigger={() => { console.error('Failed to run code. Engine has not been inited.'); props.onRunCodes?.() }}
                             lang={props.lang}
                         >
                             {props.children}

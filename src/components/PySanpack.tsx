@@ -14,7 +14,7 @@ export default function PySandpack(props: { codes: Codes; lang: Lang; editorProp
                 <StatusDisplay>
                     <SplitLayout>
                         <PySandpackEditor {...props.editorProps} />
-                        <PySandpackPreview />
+                        <PySandpackPreview showSplashScreen />
                     </SplitLayout>
                 </StatusDisplay>
             </PySandpackProvider>

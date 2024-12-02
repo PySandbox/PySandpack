@@ -45,10 +45,10 @@ function PreviewController() {
     )
 }
 
-export default function PySandpackPreview() {
+export default function PySandpackPreview(props: { showSplashScreen?: boolean; }) {
     const pspHook = usePySandpack();
-    
-    const [is1st, setIs1st] = React.useState(true); 
+
+    const [is1st, setIs1st] = React.useState(true);
 
     // const cleanEelmentById = React.useCallback((id: string) => {
     //     const previewContainer = document.getElementById(id);
@@ -78,8 +78,11 @@ export default function PySandpackPreview() {
     return (
         <FlotingBoxLayout floatingBox={<PreviewController />}>
             <div>
-                {pspHook.isReady ? <StatusDisplay blockOnCodesRunning /> : <></>}
-                <div id={PREVIEW_CONTAINER}>{pspHook.isRunning || !is1st ? <></> : <EmptyPreviewContent />}</div>
+                {props.showSplashScreen && pspHook.isReady ? <StatusDisplay blockOnCodesRunning /> : <></>}
+                <div id={PREVIEW_CONTAINER}>
+                    {!props.showSplashScreen ? <></> :
+                        ((pspHook.isRunning || !is1st) ? <></> : <EmptyPreviewContent />)}
+                </div>
                 {
                     Object.entries(pspHook.results ?? {}).map(([key, result]) => {
                         return (

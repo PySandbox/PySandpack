@@ -3,7 +3,7 @@ import { PREVIEW_CONTAINER, } from "@metadata/preview";
 import type * as Pyodide from "pyodide";
 
 import { Engine } from "types/engine";
-import { FONT_INIT_CODE, VIEW_INIT_CODE } from "./PredefinedCodes";
+import { MATPLOT_INIT_CODE, STD_INIT_CODE } from "./PredefinedCodes";
 
 // import "https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
 
@@ -90,9 +90,18 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         document.pyodideMplTarget = target;
     }
 
-    private async setupStdoutElement() {
-        await this.runCode(VIEW_INIT_CODE);
-        await this.runCode(FONT_INIT_CODE);
+    private async runPredefinedCodes(depsMap: { [fileName: string]: string[] }) {
+        await this.runCode(STD_INIT_CODE);
+
+        const depSet = new Set<string>();
+
+        for (const deps of Object.values(depsMap)) {
+            for (const dep of deps) {
+                depSet.add(dep);
+            }
+        }
+
+        depSet.has("matplotlib") && await this.runCode(MATPLOT_INIT_CODE);
     }
 
     // private async initPyodideInCommon(): Promise<Pyodide.PyodideInterface> {
@@ -168,14 +177,12 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         const results: Record<string, any> = {};
 
         this.setupMplGraphElement();
-        await this.setupStdoutElement();
+        await this.runPredefinedCodes(graph);
 
         for (const file of executionOrder) {
             const code = files[file];
 
-            if (!code) continue;
-
-            const result = await this.runCode(code);
+            const result = code ? await this.runCode(code) : undefined;
 
             results[file] = result;
         }

@@ -24,7 +24,7 @@ import PySandpack from "py_sandpack";
 
 ### 2. Using Preview only
 ```ts
-import { PySandpackProvider, usePySandpack } from 'py_sandpack';
+import { PySandpackPreview, PySandpackProvider, usePySandpack } from 'py_sandpack';
 
 function PreviewComponent() {
     const pySandpack = usePySandpack();

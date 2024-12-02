@@ -1,12 +1,9 @@
 import { PREVIEW_CONTAINER, RUNTIME_ERROR_CONTAINER } from "@metadata/preview";
 
-export const VIEW_INIT_CODE = `
+export const STD_INIT_CODE = `
 import sys
 from js import console
 from js import document
-import matplotlib.pyplot as plt
-
-plt.clf()
 
 previewContainer = document.getElementById("${PREVIEW_CONTAINER}")
 runtimeErrorContainer = document.getElementById("${RUNTIME_ERROR_CONTAINER}")
@@ -27,13 +24,14 @@ sys.stderr = CustomError()
 sys.stdout = CustomOutput()
 `;
 
-export const FONT_INIT_CODE = `
+export const MATPLOT_INIT_CODE = `
 import os
 import requests
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import matplotlib
 
+plt.clf()
 
 font_url = 'https://themes.googleusercontent.com/static/fonts/earlyaccess/nanumgothic/v3/NanumGothic-Regular.ttf'
 font_path = '/NanumGothic-Regular.ttf'
