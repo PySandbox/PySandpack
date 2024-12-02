@@ -124,9 +124,17 @@ export function PySandpackProvider(props: PySandpackProviderProps) {
                                 )
                             }
                         </ExecutionProvider> :
-                        <>
+                        <PySandpackProviderCore
+                            codes={codes}
+                            onCodesChange={setCodes}
+                            error={undefined}
+                            results={undefined}
+                            isRunning={false}
+                            trigger={() => console.error('Failed to run code. Engine has not been inited.')}
+                            lang={props.lang}
+                        >
                             {props.children}
-                        </>
+                        </PySandpackProviderCore>
                 )
             }
 
