@@ -11,7 +11,10 @@ import PopupButton from '@components/base/PopupButton';
 import PySandpackUtil from '@utils/PySandpackUtil';
 import Button from '@components/base/Button';
 
-type CommonProps = { hidePySandbox?: boolean; };
+type CommonProps = {
+    hideRunner?: boolean;
+    hidePySandbox?: boolean;
+};
 
 export type PySandpackEditorProps = ReactCodeMirrorProps & CommonProps;
 
@@ -73,7 +76,7 @@ function EditorController(props: CommonProps) {
     return (
         <div style={{ display: 'flex', gap: 10 }}>
             {props.hidePySandbox ? <></> : <Share />}
-            <CodeRunner tooltip='Run'>▶</CodeRunner>
+            {props.hideRunner ? <></> : <CodeRunner tooltip='Run'>▶</CodeRunner>}
         </div>
     )
 }
