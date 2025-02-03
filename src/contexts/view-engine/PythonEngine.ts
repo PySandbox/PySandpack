@@ -1,6 +1,6 @@
 import { PREVIEW_CONTAINER, } from "@metadata/preview";
 
-import * as Pyodide from "pyodide";
+import type * as Pyodide from "pyodide";
 
 import { Engine } from "types/engine";
 import { MATPLOT_INIT_CODE, STD_INIT_CODE } from "./PredefinedCodes";
@@ -104,11 +104,11 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
         depSet.has("matplotlib") && await this.runCode(MATPLOT_INIT_CODE);
     }
 
-    private async initPyodideInCommon(): Promise<Pyodide.PyodideInterface> {
-        const pyodide = await Pyodide.loadPyodide();
+    // private async initPyodideInCommon(): Promise<Pyodide.PyodideInterface> {
+    //     const pyodide = await Pyodide.loadPyodide();
 
-        return pyodide;
-    }
+    //     return pyodide;
+    // }
 
     private async getPyodideFromWindow() {
         const loadPyodideInBrowser = (window as any).loadPyodide as typeof Pyodide.loadPyodide;
@@ -160,8 +160,9 @@ export default class PythonEngine implements Engine<Pyodide.PackageData> {
 
         console.log('Pyodide Loading');
 
-        const isOnWebServer = window.location.protocol === 'http:' || window.location.protocol === 'https:';
-        const pyodide = await (isOnWebServer ? this.initPyodideInBrowser() : this.initPyodideInCommon());
+        // const isOnWebServer = window.location.protocol === 'http:' || window.location.protocol === 'https:';
+        // const pyodide = await (isOnWebServer ? this.initPyodideInBrowser() : this.initPyodideInCommon());
+        const pyodide = await this.initPyodideInBrowser();
 
         console.log('Pyodide Loaded');
 

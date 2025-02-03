@@ -20,21 +20,21 @@ const PYODIDE_INCLUDE = [
   "python_stdlib.zip",
 ];
 
-export function viteStaticCopyPyodide() {
-  const pyodideDir = path.dirname(url.fileURLToPath(import.meta.resolve("pyodide")));
+// export function viteStaticCopyPyodide() {
+//   const pyodideDir = path.dirname(url.fileURLToPath(import.meta.resolve("pyodide")));
 
-  return viteStaticCopy({
-    targets: [
-      ...PYODIDE_INCLUDE.map((item) => {
-        return {
-          src: path.join(pyodideDir, item).replace(/\\/g, '/'),
-          dest: "assets",
-        }
-      }),
+//   return viteStaticCopy({
+//     targets: [
+//       ...PYODIDE_INCLUDE.map((item) => {
+//         return {
+//           src: path.join(pyodideDir, item).replace(/\\/g, '/'),
+//           dest: "assets",
+//         }
+//       }),
 
-    ],
-  });
-}
+//     ],
+//   });
+// }
 
 export default defineConfig({
   build: {
